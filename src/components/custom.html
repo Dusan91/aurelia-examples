@@ -1,0 +1,41 @@
+<template>
+	<style>	
+	.a{opacity: ${opp}}
+	</style>
+	<div style="
+	${styleP}:${styleP2};
+	${styleP3}:${styleP4};
+	${styleP5}:${styleP6};
+	width:100%">
+		<div>
+			<br>
+			<br>
+			<label class="a">Text</label>
+			<br>
+			<input class="a" id="name" type="text" value.bind="myData" />
+			<br>
+			<br>
+			<h3 style="font-size:50px" click.delegate="opp=1">${myData}</h3>
+			<label  class="a">Custom Style</label>
+			<br>
+			<div class="a">
+				<input id="styleP"  type="text" value.bind="styleP" /> :
+				<input id="styleP2" type="text" value.bind="styleP2" />
+				<br><br>		
+				<input id="styleP3" type="text" value.bind="styleP3" /> :
+				<input id="styleP4" type="text" value.bind="styleP4" />
+				<br><br>		
+				<input id="styleP5" type="text" value.bind="styleP5" /> :
+				<input id="styleP6" type="text" value.bind="styleP6" /> 
+			</div>
+			<br><br>
+			<button class="a"  click.delegate="opp=0">Hide All</button>
+			</br>
+			<label  class="a">Recursive</label><br>
+			<input class="a" type="checkbox" ref="doDumbStuff" checked.bind="isCheckedD">
+			</br></br>
+			<custom  class="a" if.bind="doDumbStuff.checked"></custom>
+		</div>
+	</div>
+
+</template>

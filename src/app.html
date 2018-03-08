@@ -1,0 +1,193 @@
+<template>
+	<!--require-->
+	<require from="./components/custom"></require>
+	<require from="resources/value-converters/date"></require>
+	<require from="resources/value-converters/numeral"></require>
+	<require from="resources/value-converters/numeral2"></require>
+	<require from="resources/value-converters/time"></require>
+	<require from="./styles.css"></require>
+	<require from="./animate"></require>
+	<!--require-->
+
+	<div style="display:flex">
+		<div class="col-lg-4" style="${style1}">
+			<h1>${header}</h1>
+			<p>${content}</p>
+			<button click.delegate="firstHeaderAndContent()">First Content</button>
+			<button click.delegate="updateContent()">Update Content</button>
+			</br>
+			</br>
+			<hr>
+			<p style="
+				border: 2px solid black;
+				width: 110px;
+				margin-left: 230px;
+			">${SubmitMessage3}</p>
+			<button click.delegate="myFunction()">CLICK ME</button>
+			</br>
+			</br>
+			<hr>
+			<form role="form" submit.delegate="submit1()">
+				<p style="
+			border: 2px solid black;
+			width: 60px;
+			margin-left: 250px;
+			">${SubmitMessage1}</p>
+				<label for="checkbox">Checkbox</label>
+				<input type="checkbox" id="checkbox" checked.bind="isChecked">
+				</br>
+				</br>
+				<button type="submit1">SUBMIT</button>
+				</br>
+				</br>
+
+				<p if.bind="checkbox2.checked" style="
+				border: 2px solid black;
+				width: 60px;
+				margin-left: 250px;
+				">${SubmitMessage4}</p>
+				<label for="checkbox2">Checkbox 2</label>
+				<input type="checkbox" ref="checkbox2" checked.bind="isCheckedD">
+				</br>
+				</br>
+			</form>
+			</br>
+		</div>
+
+		<div class="col-lg-4" style="${style1}">
+			<h2>${theDate|date}</h2>
+			<h3>${theDate|time}</h3>
+			<h3>${theNum|numeral}</h3>
+			</br>
+			<hr>
+			<form role="form" submit.delegate="signup()" style="margin:10px">
+				<label for="email">Email</label>
+				<input type="text" value.bind="email" placeholder="Email">
+				<label for="password">Password</label>
+				<input type="password" value.bind="password" placeholder="Password">
+				<p style="
+				padding:5px;
+				border: 2px solid black;
+				width: auto;">${user}</p>
+				<button click.trigger="signup()" type="submit">Sign up</button>
+				<h2>${showMessage}</h2>
+			</form>
+			</br>
+
+		</div>
+		<div class="col-lg-4" style="${style1}; height:100%">
+			<custom style="display: flex;"></custom>
+		</div>
+	</div>
+	</br>
+	<hr>
+
+	<div style="display:flex">
+		<div class="col-lg-4" style="${style1}">
+			</br>
+			<p style="
+				border: 2px solid black;
+				width: 50px;
+				margin-left: 260px;
+			">${SubmitMessage2}</p>
+			<form role="form" submit.delegate="submit2()">
+				<label repeat.for="option of options">
+					<input type="radio" name="myOptions" model.bind="option" checked.bind="$parent.selectedOption" /> ${option.text}
+				</label>
+				<br/>
+				<button type="submit2">SUBMIT</button>
+			</form>
+			</br>
+			<animate>${content}</animate>
+			</br>
+			</br>
+
+			<hr>
+			<nav>
+				<ul>
+					<li repeat.for="row of router.navigation">
+						<a href.bind="row.href">${row.title}</a>
+					</li>
+				</ul>
+			</nav>
+
+			<button click.delegate="goBack()"><<<</button>
+			<button click.delegate="goForward()">>>></button>
+			<router-view></router-view>
+		</div>
+		<div class="col-lg-4" style="${style1}">
+			</br>
+			</br>
+			<label>RSD</label>
+			<br>
+			<input id="RSD" type="text" value.bind="RSD" />
+			<br>
+			<label>Exchange</label>
+			<br>
+			<input id="ER" type="text" value.bind="ER" />
+			<br>
+			<h3>EUR</h3>
+			<h4>${(RSD / ER)|numeral }</h4>
+			<hr>
+			</br>
+			<label>EUR</label>
+			<br>
+			<input id="EUR" type="text" value.bind="EUR" />
+			<br>
+			<label>Exchange</label>
+			<br>
+			<input id="ER2" type="text" value.bind="ER2" />
+			<br>
+			<h3>RSD</h3>
+			<h4>${(EUR * ER2)| numeral}</h4>
+			</br>
+		</div>
+		</br>
+		</br>
+
+		<div class="col-lg-4" style="${style1}">
+			<style>
+				table,
+				th,
+				td {
+
+					margin: 25px;
+					border: 2px solid black;
+					border-collapse: collapse;
+				}
+
+				th,
+				td {
+					padding: 5px;
+					text-align: center;
+				}
+			</style>
+
+			<div class="container" style="text-align:left">
+				<h1 class="title" style="margin-left:20px">Users:</h1>
+				<table class="table">
+					<tr>
+						<th>Id</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Show/Hidde Password</th>
+						<th>Delete User</th>
+					</tr>
+					<tr repeat.for="x of signups">
+						<td>${x.randomNumber|numeral2:'000'}</td>
+						<td>${x.email}</td>
+						<input type="hidden" value="${opp=0}">
+						<td style="opacity:${opp} !important">${x.password}</td>
+						<td>
+							<button class="btn btn-danger" click.delegate="opp=1">Show</button>
+							<button class="btn btn-danger" click.delegate="opp=0">Hidde</button>
+						</td>
+						<td>
+							<!-- <button click.trigger="$parent.delete($index)" class="btn btn-danger">Delete</button> -->
+							<button click.trigger="openModal($index)">Delete</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+</template>
